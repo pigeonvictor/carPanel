@@ -1,24 +1,33 @@
 var Square = React.createClass({
     render :function (){
       return (
-        <div className='square'></div>
+        <div className="col-md-12">
+        {this.props.raw.map(function (i){
+          return <div className='square'></div>
+        })}
+      </div>
       );
     }
 });
 
 var SquareDrawer = React.createClass({
   render : function (){
-    var rows = [], i = 0
-    while (++i <= this.props.x)
+    var BigRows = [], i = 0;
+    while (++i <= this.props.y)
     {
-      console.log("plop");
-      rows.push(i);
+      var rows = [], j = 0;
+      while (++j <= this.props.x)
+      {
+        console.log("plop");
+        rows.push(j);
+      }
+      BigRows.push(rows);
     }
     return (
       <div>
       {
-        rows.map(function (i) {
-        return <Square/>;
+        BigRows.map(function (i) {
+        return <Square raw={i} />;
       })}
       </div>
     );
