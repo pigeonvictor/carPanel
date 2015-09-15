@@ -1,9 +1,19 @@
 var Square = React.createClass({
     render :function (){
+      console.log(this.props.div_width);
+      var square_size = Math.floor((this.props.div_width - 1) / this.props.nb_squares);
+      if (square_size > 150)
+        square_size = 150;
+      console.log(square_size);
+      var style = {
+        width:square_size,
+        height:square_size
+      }
       return (
-        <div className="col-md-12">
+      <div className="container">
         {this.props.raw.map(function (i){
-          return <div className='square'></div>
+          return <div className='square'
+                      style={style}></div>
         })}
       </div>
       );
@@ -18,16 +28,22 @@ var SquareDrawer = React.createClass({
       var rows = [], j = 0;
       while (++j <= this.props.x)
       {
-        console.log("plop");
         rows.push(j);
       }
       BigRows.push(rows);
     }
     return (
-      <div>
+      <div id="squares">
       {
         BigRows.map(function (i) {
-        return <Square raw={i} />;
+          var size = 0, key;
+          for (key in i){
+            if (i.hasOwnProperty(key))
+              size++;
+          }
+          return <Square raw={i}
+                       div_width={document.getElementById("squares").offsetWidth}
+                       nb_squares={size}/>;
       })}
       </div>
     );
