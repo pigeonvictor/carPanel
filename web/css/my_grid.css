@@ -2,7 +2,7 @@
     float: left;
     display:block;
     overflow:hidden;
-    border: 1px solid #000000;
-    border-radius: 10%;
-    background-color: #F0F0F0;
+    border: 1px solid #2F2F2F;
+    border-radius: 100%;
+    /*background-color: #F0F0F0;*/
 }
