@@ -1,3 +1,17 @@
+var Code = React.createClass({
+  getInitialState : function (){
+    return {
+      code : 'coucou la france'
+    }
+  },
+
+  render : function(){
+    return (
+        <pre><code>{this.state.code}</code></pre>
+    )
+  }
+})
+
 var Square = React.createClass({
   getInitialState : function(){
     return {
@@ -5,16 +19,16 @@ var Square = React.createClass({
     };
   },
   handleClick : function(){
-    console.log('COUCOU !');
     this.setState({backcolor : document.getElementById('colorpicker').value});
+
   },
     render : function(){
-      console.log("A fucking Square of " + this.props.square_size);
       var style = {
         width:this.props.square_size,
         height:this.props.square_size,
         background:this.state.backcolor
       }
+      document.getElementById('code_viewer').innerHTML += "trololo, "
       return (
         <div className='square' style={style} onClick={this.handleClick}></div>
       );
@@ -38,7 +52,6 @@ var SquareRow = React.createClass({
       width:square_size,
       height:square_size
     }
-    var i = 0;
     return (
       <div className="container">
       {this.props.raw.map(function(i){
@@ -114,3 +127,4 @@ var SquareDrawer = React.createClass({
 
 
   React.render(<SizeSelector/>, document.getElementById('size_selector'));
+  React.render(<Code />, document.getElementById('code_viewer'));
