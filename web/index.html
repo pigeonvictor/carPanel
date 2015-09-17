@@ -4,45 +4,21 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>GridMaker</title>
-
-  <!-- Bootstrap -->
-
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/my_grid.css" rel="stylesheet">
   <link href="css/bootstrap-colorpicker.min.css" rel="stylesheet">
   <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
 </head>
 <body>
   <div class="container">
     <h1 class="cover-heading">Grid Maker</h1>
-    <div class="input-group square_color">
+    <div class="form-group">
+    <div class="input-group col-md-6 square_color">
       <input type="text"  value="#ffaa00" id="colorpicker" class="form-control" />
       <span class="input-group-addon"><i></i></span>
     </div>
-    <style>
-    .colorpicker-2x .colorpicker-saturation {
-        width: 200px;
-        height: 200px;
-    }
-    .colorpicker-2x .colorpicker-hue,
-    .colorpicker-2x .colorpicker-alpha {
-        width: 30px;
-        height: 200px;
-    }
-    .colorpicker-2x .colorpicker-color,
-    .colorpicker-2x .colorpicker-color div{
-        height: 30px;
-    }
-</style>
+  </div>
     <script type="text/javascript">
     $(function(){
       $('.square_color').colorpicker({
@@ -62,7 +38,9 @@
       });
     });
     </script>
+      <div class="form-group">
     <div id='size_selector'></div>
+  </div>
     <div id='code_viewer'></div>
   </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

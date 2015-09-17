@@ -1,14 +1,54 @@
 var Code = React.createClass({
   getInitialState : function (){
     return {
-      code : 'coucou la france'
+      code : 'static const uint8_t img[] = {\n};',
+      hexDigits : ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"]
     }
   },
 
+  hex : function(x) {
+  return isNaN(x) ? "00" : this.state.hexDigits[(x - x % 16) / 16] + this.state.hexDigits[x % 16];
+},
+
+  rgb2hex : function(rgb) {
+
+ rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+ return "#" + this.hex(rgb[1]) + this.hex(rgb[2]) + this.hex(rgb[3]);
+  },
+
+  handleClick : function (){
+      var row = 0;
+      var parent;
+      var code = 'static const uint8_t img[] = {\n';
+      while ((parent = document.getElementById('row_' + row)) != null)
+        {
+          var squares = parent.childNodes.length, i = 0;
+          while (i < squares)
+          {
+            var color = this.rgb2hex(parent.childNodes[i].style.backgroundColor);
+            code += color + ',';
+            i++;
+          }
+          code += '\n';
+          row++;
+        }
+      code +='};';
+      this.setState({code : code});
+  },
+
   render : function(){
+    var type = 'button', class_name = "btn btn-default btn-lg";
     return (
-        <pre><code>{this.state.code}</code></pre>
-    )
+      <div>
+      <div className="form-group">
+      <button type="button" className="btn btn-default btn-lg" onClick={this.handleClick}>
+      <span className="glyphicon glyphicon glyphicon-wrench" aria-hidden="true"></span>
+      Convert to array
+      </button>
+      </div>
+      <pre><code className="C++ hljs">{this.state.code}</code></pre>
+      </div>
+    );
   }
 })
 
@@ -28,9 +68,10 @@ var Square = React.createClass({
         height:this.props.square_size,
         background:this.state.backcolor
       }
-      document.getElementById('code_viewer').innerHTML += "trololo, "
+      var id = "square_" + this.props.id;
       return (
-        <div className='square' style={style} onClick={this.handleClick}></div>
+        <div className='square' style={style}
+            onClick={this.handleClick} id={id}></div>
       );
     }
 })
@@ -43,19 +84,19 @@ var SquareRow = React.createClass({
   },
 
   render : function (){
-    console.log(this.props.div_width);
     var square_size = Math.floor((this.props.div_width - 1) / this.props.nb_squares);
-    if (square_size > 150)
-    square_size = 150;
-    console.log(square_size);
+    if (square_size > 70)
+    square_size = 70;
     var style = {
       width:square_size,
       height:square_size
     }
+    var row_id = 'row_' + this.props.id;
+    var id_square = 0;
     return (
-      <div className="container">
+      <div className="container" id={row_id}>
       {this.props.raw.map(function(i){
-        return <Square square_size={square_size}/>;
+        return <Square square_size={square_size} id={id_square++}/>;
       })}
       </div>
     );
@@ -74,6 +115,7 @@ var SquareDrawer = React.createClass({
       }
       BigRows.push(rows);
     }
+    var id = 0;
     return (
       <div id="squares">
       {
@@ -85,7 +127,7 @@ var SquareDrawer = React.createClass({
           }
           return <SquareRow raw={i}
           div_width={document.getElementById("squares").offsetWidth}
-          nb_squares={size}/>;
+          nb_squares={size} id={id++}/>;
         })}
         </div>
       );
@@ -101,18 +143,20 @@ var SquareDrawer = React.createClass({
     },
     render: function(){
       return (
-        <div className='container'>
-        <div className='input-group col-md-2'>
+        <div>
+        <div className="form-group">
+        <div className='input-group col-md-6'>
         <span className="input-group-addon" id="basic-addon1">whidth</span>
         <input  type="number" className="form-control" placeholder="X"
         aria-describedby="basic-addon1" onChange={this.changeX}></input>
-        </div>
-        <div className='input-group col-md-2'>
         <span className="input-group-addon" id="basic-addon1">heigh</span>
         <input  type="number" className="form-control" placeholder="Y"
         aria-describedby="basic-addon1" onChange={this.changeY}></input>
         </div>
+        </div>
+        <div className="form-group">
         <SquareDrawer x={this.state.x} y={this.state.y}/>
+        </div>
         </div>
       );
     },
